@@ -81,6 +81,47 @@
     <material>Gazebo/Gray</material>
   </gazebo>
 
+  <joint name="imu_joint" type="fixed">
+    <parent link="body_link"/>
+    <child  link="imu_link"/>
+    <origin xyz="0 0 0.035" rpy="0 0 0"/>
+  </joint>
+  <link name="imu_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.02" length="0.01" />
+      </geometry>
+      <material name="gray" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.02" length="0.01" />
+      </geometry>
+      <material name="gray" />
+    </collision>
+  </link>
+  <gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>data</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu/data_raw</topicName>
+        <bodyName>imu_link</bodyName>
+        <updateRateHZ>10.0</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+    </sensor>
+  </gazebo>
+
   <joint name="lidar_joint" type="fixed">
     <parent link="body_link"/>
     <child  link="lidar_link"/>
@@ -106,7 +147,7 @@
     <material>Gazebo/Blue</material>
     <sensor type="ray" name="lidar">
       <pose>0 0 0 0 0 0</pose>
-      <visualize>false</visualize>
+      <visualize>true</visualize>
       <update_rate>60</update_rate>
       <ray>
         <scan>
