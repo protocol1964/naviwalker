@@ -1,0 +1,32 @@
+<launch>
+    <param name="/use_sim_time" value="false" />
+
+    <!-- RViz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find naviwalker)/config/config.rviz" />
+
+    <!-- Static tf publisher -->
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_lidar_base_link_tf_publisher" args="0 0 0 0 0 0 base_link lidar_base_link 100" />
+    <node pkg="tf" type="static_transform_publisher" name="lidar_base_link_to_lidar_tf_publisher" args="0 0 0.059 0 0 0 lidar_base_link laser 100" />
+    <node pkg="tf" type="static_transform_publisher" name="lidar_base_link_to_imu_link_tf_publisher" args="0 0 0.006 3.141592 0 0 lidar_base_link imu_link 100" />
+
+    <!-- IMU -->
+    <!-- You have to install the rt_usb_9axisimu_driver package (http://wiki.ros.org/ja/rt_usb_9axisimu_driver) -->
+    <!--<include file="$(find rt_usb_9axisimu_driver)/launch/rt_usb_9axisimu_driver.launch" />
+    <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter_node" >
+        <param name="publish_tf" value="false" />
+    </node>-->
+
+    <!-- Hokuyo LiDAR -->
+    <!--<node pkg="urg_node" type="urg_node" name="urg_node" >-->
+        <!-- Please uncomment one of them -->
+
+        <!-- If you are using a UTM-30LX, uncomment the bottom line and please check your device path (e.g."/dev/ttyACM0") -->
+        <!-- param name="serial_port" value="/dev/ttyACM1" / -->
+
+        <!-- If you are using a UTM-30LX-EW, uncomment the bottom line and you have to set up routing -->
+        <!--<param name="ip_address" value="192.168.0.10" />
+    </node>-->
+
+
+
+</launch>
