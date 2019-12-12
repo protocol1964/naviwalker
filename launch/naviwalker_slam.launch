@@ -9,6 +9,11 @@
     <node pkg="tf" type="static_transform_publisher" name="lidar_base_link_to_lidar_tf_publisher" args="0 0 0.059 0 0 0 lidar_base_link laser 100" />
     <node pkg="tf" type="static_transform_publisher" name="lidar_base_link_to_imu_link_tf_publisher" args="0 0 0.006 3.141592 0 0 lidar_base_link imu_link 100" />
 
+    <!-- Laser filters -->
+    <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
+        <rosparam command="load" file="$(find naviwalker)/config/laser_filter.yaml" />
+    </node>
+
     <!-- IMU -->
     <!-- You have to install the rt_usb_9axisimu_driver package (http://wiki.ros.org/ja/rt_usb_9axisimu_driver) -->
     <!--<include file="$(find rt_usb_9axisimu_driver)/launch/rt_usb_9axisimu_driver.launch" />
